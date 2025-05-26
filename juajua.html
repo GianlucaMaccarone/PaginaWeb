@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hola Mundo</title>
+    <script>
+        function saludar() {
+            const nombre = prompt("¿Cuál es tu nombre?");
+            if (nombre) {
+                document.getElementById("saludo").textContent = "Hola " + nombre + ", ¡bienvenido!";
+            }
+        }
+        window.onload = saludar;
+    </script>
+</head>
+<body>
+    <h1>Hola Mundo</h1>
+    <p id="saludo"></p>
+</body>
+</html>
