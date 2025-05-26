@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Hola Mundo - Fecha y Hora Actual</title>
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+        }
+        #datetime {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+        #timezone-select {
+            font-size: 1em;
+            padding: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hola mundo</h1>
+    <select id="timezone-select">
+        <option value="America/Argentina/Buenos_Aires">Argentina</option>
+        <option value="Asia/Bangkok">Tailandia</option>
+        <option value="Asia/Tokyo">Japón</option>
+    </select>
+    <div id="datetime"></div>
+    <script>
+        const timezoneSelect = document.getElementById('timezone-select');
+        function updateDateTime() {
+            const now = new Date();
+            const timezone = timezoneSelect.value;
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false,
+                timeZone: timezone
+            };
+            const dateTime = now.toLocaleString('es-ES', options);
+            document.getElementById('datetime').textContent = dateTime;
+        }
+        timezoneSelect.addEventListener('change', updateDateTime);
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+    </script>
+    <!--
+        Guarda este archivo como "index.html" y ábrelo en tu navegador.
+        Link de acceso local: file:///RUTA/AL/ARCHIVO/index.html
+        (Reemplaza RUTA/AL/ARCHIVO por la ubicación donde guardaste el archivo
+    -->
+
+    <div id="oncall-info" style="margin-top:30px; font-size:1.2em;"></div>
+    <script>
+        function getOnCallPerson(timezone, date) {
+            const hour = parseInt(date.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: timezone }));
+            if (timezone === "America/Argentina/Buenos_Aires") {
+                // Nahuel: 7-8am
+                if (hour >= 7 && hour < 8) return "Nahuel";
+                else return "Nadie asignado";
+            }
+            if (timezone === "Asia/Bangkok") {
+                // Shun: 7-8am
+                if (hour >= 7 && hour < 8) return "Shun";
+                else return "Nadie asignado";
+            }
+            if (timezone === "Asia/Tokyo") {
+                // Yugi: 8am-17pm, Judai: 17pm-8am
+                if (hour >= 8 && hour < 17) return "Yugi";
+                else return "Judai";
+            }
+            return "Nadie asignado";
+        }
+
+        function updateOnCallInfo() {
+            const timezone = timezoneSelect.value;
+            const now = new Date();
+            const person = getOnCallPerson(timezone, now);
+            document.getElementById('oncall-info').textContent = `On-call actual: ${person}`;
+        }
+
+        timezoneSelect.addEventListener('change', updateOnCallInfo);
+        setInterval(updateOnCallInfo, 1000);
+        updateOnCallInfo();
+    </script>
+    -->
+</body>
+</html>
